@@ -222,6 +222,8 @@ export async function fetchTweets(
   userTweetsRequest.variables.userId = userId;
   userTweetsRequest.variables.count = maxTweets;
   userTweetsRequest.variables.includePromotedContent = false; // true on the website
+  userTweetsRequest.variables.withV2Timeline = true;
+  userTweetsRequest.variables.withVoice = true;
 
   if (cursor != null && cursor != '') {
     userTweetsRequest.variables['cursor'] = cursor;
@@ -374,8 +376,8 @@ export function parseTweetV2ToV1(
       end_datetime: poll.end_datetime
         ? poll.end_datetime
         : defaultTweetData?.poll?.end_datetime
-        ? defaultTweetData?.poll?.end_datetime
-        : undefined,
+          ? defaultTweetData?.poll?.end_datetime
+          : undefined,
       options: poll.options.map((option) => ({
         position: option.position,
         label: option.label,
